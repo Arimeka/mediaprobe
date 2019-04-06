@@ -10,7 +10,7 @@ import (
 	"github.com/h2non/filetype"
 )
 
-func New(filename string) (*Info, error) {
+func UnsafeNew(filename string) (*Info, error) {
 	file, err := os.Open(filename)
 	if err != nil {
 		return nil, err
@@ -40,7 +40,7 @@ func New(filename string) (*Info, error) {
 	return info, nil
 }
 
-func SafeNew(filepath string) (*Info, error) {
+func New(filepath string) (*Info, error) {
 	file, err := os.Open(filepath)
 	if err != nil {
 		return nil, err
@@ -72,7 +72,7 @@ func SafeNew(filepath string) (*Info, error) {
 }
 
 func Parse(filepath string) (Info, error) {
-	info, err := SafeNew(filepath)
+	info, err := New(filepath)
 	if err != nil {
 		return Info{}, fmt.Errorf("can't probe file: %v", err)
 	}

@@ -20,7 +20,7 @@ func main() {
 
 	log.Printf("Safe Parse: %+v\n", info)
 
-	unsafeInfo, err := mediaprobe.New(srcFileName)
+	unsafeInfo, err := mediaprobe.UnsafeNew(srcFileName)
 	if err != nil {
 		log.Fatalf("Error Parse - %s\n", err)
 	}
