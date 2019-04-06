@@ -79,6 +79,7 @@ func Parse(filepath string) (Info, error) {
 
 	switch info.MediaType {
 	case "image":
+		err = info.ParseImage(filepath)
 	case "video", "audio":
 		err = info.FFProbe(filepath)
 	}

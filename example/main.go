@@ -25,6 +25,16 @@ func main() {
 		log.Fatalf("Error Parse - %s\n", err)
 	}
 
+	switch unsafeInfo.MediaType {
+	case "image":
+		err = info.ParseImage(srcFileName)
+	case "video", "audio":
+		err = info.FFProbe(srcFileName)
+	}
+	if err != nil {
+		log.Fatalf("Error Parse - %s\n", err)
+	}
+
 	err = unsafeInfo.FFProbe(srcFileName)
 	if err != nil {
 		log.Fatalf("Error Parse - %s\n", err)

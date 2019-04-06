@@ -2,3 +2,6 @@ github.com/3d0c/gmf v0.0.0-20190329115157-0a02dda3cdb2 h1:6MgkBGTG/c6dg6ig14q8D9
 github.com/3d0c/gmf v0.0.0-20190329115157-0a02dda3cdb2/go.mod h1:0QMRcUq2JsDECeAq7bj4h79k7XbhtTsrPUQf6G7qfPs=
 github.com/h2non/filetype v1.0.8 h1:le8gpf+FQA0/DlDABbtisA1KiTS0Xi+YSC/E8yY3Y14=
 github.com/h2non/filetype v1.0.8/go.mod h1:isekKqOuhMj+s/7r3rIeTErIRy4Rub5uBWHfvMusLMU=
+golang.org/x/image v0.0.0-20190321063152-3fc05d484e9f h1:FO4MZ3N56GnxbqxGKqh+YTzUWQ2sDwtFQEZgLOxh9Jc=
+golang.org/x/image v0.0.0-20190321063152-3fc05d484e9f/go.mod h1:kZ7UVZpmo3dzQBMxlp+ypCbDeSB+sBbTgSJuh5dn5js=
+golang.org/x/text v0.3.0/go.mod h1:NqM8EUOU14njkJ3fqMW+pc6Ldnwhi/IjpwHt7yyuwOQ=
