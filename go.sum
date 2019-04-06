@@ -1,0 +1,4 @@
+github.com/3d0c/gmf v0.0.0-20190329115157-0a02dda3cdb2 h1:6MgkBGTG/c6dg6ig14q8D9zEIbe+tMbGETpcrq+ZuWg=
+github.com/3d0c/gmf v0.0.0-20190329115157-0a02dda3cdb2/go.mod h1:0QMRcUq2JsDECeAq7bj4h79k7XbhtTsrPUQf6G7qfPs=
+github.com/h2non/filetype v1.0.8 h1:le8gpf+FQA0/DlDABbtisA1KiTS0Xi+YSC/E8yY3Y14=
+github.com/h2non/filetype v1.0.8/go.mod h1:isekKqOuhMj+s/7r3rIeTErIRy4Rub5uBWHfvMusLMU=
