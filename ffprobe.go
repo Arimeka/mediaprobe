@@ -6,6 +6,7 @@ import (
 	"github.com/3d0c/gmf"
 )
 
+// FFProbe parsing audio/video file
 func (probe *Info) FFProbe(filepath string) error {
 	inputCtx, err := gmf.NewInputCtx(filepath)
 	if err != nil {

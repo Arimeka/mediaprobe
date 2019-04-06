@@ -10,6 +10,7 @@ import (
 	"github.com/h2non/filetype"
 )
 
+// UnsafeNew initialized Info without using magic bytes for calculating media type
 func UnsafeNew(filename string) (*Info, error) {
 	file, err := os.Open(filename)
 	if err != nil {
@@ -40,8 +41,9 @@ func UnsafeNew(filename string) (*Info, error) {
 	return info, nil
 }
 
-func New(filepath string) (*Info, error) {
-	file, err := os.Open(filepath)
+// New initialized Info using magic bytes for calculating media type
+func New(filename string) (*Info, error) {
+	file, err := os.Open(filename)
 	if err != nil {
 		return nil, err
 	}
@@ -71,17 +73,18 @@ func New(filepath string) (*Info, error) {
 	}, nil
 }
 
-func Parse(filepath string) (Info, error) {
-	info, err := New(filepath)
+// Parse parsing file media data
+func Parse(filename string) (Info, error) {
+	info, err := New(filename)
 	if err != nil {
 		return Info{}, fmt.Errorf("can't probe file: %v", err)
 	}
 
 	switch info.MediaType {
 	case "image":
-		err = info.ParseImage(filepath)
+		err = info.ParseImage(filename)
 	case "video", "audio":
-		err = info.FFProbe(filepath)
+		err = info.FFProbe(filename)
 	}
 	if err != nil {
 		return Info{}, fmt.Errorf("can't probe file: %v", err)

@@ -2,6 +2,7 @@ package mediaprobe
 
 import "time"
 
+// Info contains parsed information
 type Info struct {
 	Name         string
 	MediaType    string
@@ -15,6 +16,7 @@ type Info struct {
 	Streams      []Stream
 }
 
+// Stream used for contain audio/video stream information
 type Stream struct {
 	ID             int
 	Index          int
