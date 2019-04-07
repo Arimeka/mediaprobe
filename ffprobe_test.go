@@ -15,7 +15,7 @@ var bitrateFiles = map[string]int64{
 
 func TestInfo_FFProbe(t *testing.T) {
 	for filename, expectedBitrate := range bitrateFiles {
-		info, _ := mediaprobe.UnsafeNew(filename)
+		info, _ := mediaprobe.New(filename)
 
 		err := info.FFProbe(filename)
 		if err != nil {

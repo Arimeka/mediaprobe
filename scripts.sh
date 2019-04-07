@@ -10,7 +10,10 @@ runTests() {
   if ! gocritic check -enable='#diagnostic,#style,#performance' -disable='docStub' .; then
     exit 1
   fi
-  if ! go test -cover .; then
+  if ! go test -cover -race -coverprofile=app.coverprofile -outputdir=coverage .; then
+    exit 1
+  fi
+  if ! go tool cover -html=./coverage/app.coverprofile -o ./coverage/app.coverprofile.html; then
     exit 1
   fi
 }

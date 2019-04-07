@@ -11,13 +11,13 @@ const (
 )
 
 func TestInfo_ParseImage(t *testing.T) {
-	info, _ := mediaprobe.UnsafeNew(testImageInvalidImage)
+	info, _ := mediaprobe.New(testImageInvalidImage)
 	err := info.ParseImage(testImageInvalidImage)
 	if err == nil {
 		t.Errorf("Filename: %s. Expected to return error but return nil", testImageInvalidImage)
 	}
 
-	info, _ = mediaprobe.UnsafeNew(testImageValidImage)
+	info, _ = mediaprobe.New(testImageValidImage)
 	err = info.ParseImage(testImageValidImage)
 	if err != nil {
 		t.Errorf("Filename: %s. Unexpected error %v", testImageValidImage, err)
