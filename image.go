@@ -14,7 +14,7 @@ import (
 )
 
 // ParseImage used for retrieve image data
-// TODO: implement calculating aspect-ratio
+// TODO: implement calculating rotation
 func (probe *Info) ParseImage(filepath string) error {
 	file, err := os.Open(filepath)
 	if err != nil {
