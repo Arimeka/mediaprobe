@@ -26,7 +26,6 @@ func BenchmarkInfo_FFProbe(b *testing.B) {
 	}
 }
 
-// ffprobe -v quiet -print_format json -show_format -show_streams example/samples/video.mp4
 func BenchmarkInfo_FFProbeCli(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		cmd := exec.Command("ffprobe", "-v quiet", "-print_format json", "-show_format", "-show_streams", benchmarkValidVideo)
