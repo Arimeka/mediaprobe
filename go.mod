@@ -1,4 +1,4 @@
-module mediaprobe
+module github.com/Arimeka/mediaprobe
 
 go 1.12
 

@@ -3,7 +3,7 @@ package mediaprobe_test
 import (
 	"log"
 
-	"mediaprobe"
+	"github.com/Arimeka/mediaprobe"
 )
 
 func ExampleParse() {

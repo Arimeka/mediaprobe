@@ -4,7 +4,7 @@ import (
 	"os/exec"
 	"testing"
 
-	"mediaprobe"
+	"github.com/Arimeka/mediaprobe"
 )
 
 const (

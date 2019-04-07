@@ -3,7 +3,7 @@ package mediaprobe_test
 import (
 	"testing"
 
-	"mediaprobe"
+	"github.com/Arimeka/mediaprobe"
 )
 
 var bitrateFiles = map[string]int64{

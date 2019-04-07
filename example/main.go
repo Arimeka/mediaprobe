@@ -4,7 +4,7 @@ import (
 	"flag"
 	"log"
 
-	"mediaprobe"
+	"github.com/Arimeka/mediaprobe"
 )
 
 func main() {

@@ -1,8 +1,9 @@
 package mediaprobe_test
 
 import (
-	"mediaprobe"
 	"testing"
+
+	"github.com/Arimeka/mediaprobe"
 )
 
 const (
