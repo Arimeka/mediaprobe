@@ -10,6 +10,9 @@ runTests() {
   if ! gocritic check -enable='#diagnostic,#style,#performance' -disable='docStub' .; then
     exit 1
   fi
+  if ! go test -cover .; then
+    exit 1
+  fi
 }
 
 COMMAND=$1
