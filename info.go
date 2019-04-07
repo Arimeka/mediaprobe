@@ -4,6 +4,8 @@ import "time"
 
 // Info contains parsed information
 type Info struct {
+	filename string
+
 	Name         string
 	MediaType    string
 	MediaSubtype string

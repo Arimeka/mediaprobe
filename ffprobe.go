@@ -7,8 +7,8 @@ import (
 )
 
 // FFProbe parsing audio/video file
-func (probe *Info) FFProbe(filepath string) error {
-	inputCtx, err := gmf.NewInputCtx(filepath)
+func (probe *Info) FFProbe() error {
+	inputCtx, err := gmf.NewInputCtx(probe.filename)
 	if err != nil {
 		return err
 	}

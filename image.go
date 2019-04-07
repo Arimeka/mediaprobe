@@ -15,8 +15,8 @@ import (
 
 // ParseImage used for retrieve image data
 // TODO: implement calculating rotation
-func (probe *Info) ParseImage(filepath string) error {
-	file, err := os.Open(filepath)
+func (probe *Info) ParseImage() error {
+	file, err := os.Open(probe.filename)
 	if err != nil {
 		return err
 	}

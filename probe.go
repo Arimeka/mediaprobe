@@ -22,8 +22,9 @@ func New(filename string) (*Info, error) {
 	}
 
 	info := &Info{
-		Name: fileinfo.Name(),
-		Size: fileinfo.Size(),
+		filename: filename,
+		Name:     fileinfo.Name(),
+		Size:     fileinfo.Size(),
 	}
 
 	if err := magicmime.Open(magicmime.MAGIC_MIME_TYPE | magicmime.MAGIC_SYMLINK | magicmime.MAGIC_ERROR); err != nil {
@@ -57,9 +58,9 @@ func Parse(filename string) (Info, error) {
 
 	switch info.MediaType {
 	case "image":
-		err = info.ParseImage(filename)
+		err = info.ParseImage()
 	case "video", "audio":
-		err = info.FFProbe(filename)
+		err = info.FFProbe()
 	}
 	if err != nil {
 		return Info{}, fmt.Errorf("can't probe file: %v", err)

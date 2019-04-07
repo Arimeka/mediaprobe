@@ -4,5 +4,7 @@
 example/example
 
 # coverage
-*.coverprofile
-*.coverprofile.html
+coverage/*.out
+coverage/*.out.html
+coverage/*.out.svg
+*.test

@@ -17,7 +17,7 @@ func TestInfo_FFProbe(t *testing.T) {
 	for filename, expectedBitrate := range bitrateFiles {
 		info, _ := mediaprobe.New(filename)
 
-		err := info.FFProbe(filename)
+		err := info.FFProbe()
 		if err != nil {
 			if filename != "./example/samples/corrupted.mp4" {
 				t.Errorf("Filename: %s. Unexpected error %v", filename, err)
