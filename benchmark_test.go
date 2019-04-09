@@ -1,7 +1,6 @@
 package mediaprobe_test
 
 import (
-	"os/exec"
 	"testing"
 
 	"github.com/Arimeka/mediaprobe"
@@ -23,13 +22,6 @@ func BenchmarkInfo_FFProbe(b *testing.B) {
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		info.FFProbe()
-	}
-}
-
-func BenchmarkInfo_FFProbeCli(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		cmd := exec.Command("ffprobe", "-v quiet", "-print_format json", "-show_format", "-show_streams", benchmarkValidVideo)
-		cmd.Run()
 	}
 }
 
