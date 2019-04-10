@@ -1,0 +1,37 @@
+language: go
+
+dist: xenial
+sudo: required
+
+go:
+  - 1.10.x
+  - 1.11.x
+  - 1.x
+
+addons:
+  apt:
+    packages:
+      - libmagic-dev
+
+before_install:
+  - sudo add-apt-repository ppa:jonathonf/ffmpeg-4 -y
+  - sudo apt-get update -q
+  - sudo apt-get install libavcodec-dev libavdevice-dev libavfilter-dev libavformat-dev libavresample-dev libavutil-dev libpostproc-dev libswresample-dev libswscale-dev -y
+  - go get -u github.com/mattn/goveralls
+
+install:
+  - go get -u golang.org/x/lint/golint
+  - go get github.com/3d0c/gmf
+  - go get github.com/rakyll/magicmime
+  - go get github.com/rwcarlsen/goexif/exif
+  - go get golang.org/x/image/bmp
+  - go get golang.org/x/image/tiff
+  - go get golang.org/x/image/webp
+
+script:
+  - diff -u <(echo -n) <(go vet ./)
+  - diff -u <(echo -n) <(golint ./)
+  - go test -v -race -covermode=atomic -coverprofile=coverage.out
+
+after_success:
+  - goveralls -coverprofile=coverage.out -service=travis-ci

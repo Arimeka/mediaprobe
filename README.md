@@ -1,3 +1,7 @@
+[![Build Status](https://travis-ci.org/Arimeka/mediaprobe.svg?branch=master)](https://travis-ci.org/Arimeka/mediaprobe)
+[![Coverage Status](https://coveralls.io/repos/github/Arimeka/mediaprobe/badge.svg?branch=master)](https://coveralls.io/github/Arimeka/mediaprobe?branch=master)
+[![Go Report Card](https://goreportcard.com/badge/github.com/Arimeka/mediaprobe)](https://goreportcard.com/report/github.com/Arimeka/mediaprobe)
+
 # mediaprobe
 
 Parsing media files using bindings for getting information about codec, bitrate, dimensions, etc.
