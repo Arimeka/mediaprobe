@@ -6,17 +6,18 @@ import (
 	"github.com/3d0c/gmf"
 )
 
-// FFProbe parsing audio/video file
-func (probe *Info) FFProbe() error {
-	inputCtx, err := gmf.NewInputCtx(probe.filename)
+// FFProbe parses video or audio using ffmpeg bindings
+// It uses github.com/3d0c/gmf package
+func (info *Info) FFProbe() error {
+	inputCtx, err := gmf.NewInputCtx(info.filename)
 	if err != nil {
 		return err
 	}
 	defer inputCtx.Free()
 
-	probe.Duration = time.Duration(inputCtx.Duration() * float64(time.Second))
-	probe.StartTime = time.Duration(inputCtx.StartTime() * int(time.Second))
-	probe.BitRate = inputCtx.BitRate()
+	info.Duration = time.Duration(inputCtx.Duration() * float64(time.Second))
+	info.StartTime = time.Duration(inputCtx.StartTime() * int(time.Second))
+	info.BitRate = inputCtx.BitRate()
 
 	for idx := 0; idx < inputCtx.StreamsCnt(); idx++ {
 		stream, err := inputCtx.GetStream(idx)
@@ -54,7 +55,7 @@ func (probe *Info) FFProbe() error {
 		codecCtx.Free()
 		stream.Free()
 
-		probe.Streams = append(probe.Streams, streamInfo)
+		info.Streams = append(info.Streams, streamInfo)
 	}
 
 	return nil

@@ -7,13 +7,26 @@ import (
 )
 
 const (
-	benchmarkValidVideo = "./example/samples/video.mp4"
-	benchmarkValidImage = "./example/samples/image.jpeg"
+	benchmarkValidVideo = "./fixtures/video.mp4"
+	benchmarkValidImage = "./fixtures/image.jpeg"
 )
 
 func BenchmarkParse(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		mediaprobe.Parse(benchmarkValidVideo)
+	}
+}
+
+func BenchmarkNew(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		mediaprobe.New(benchmarkValidVideo)
+	}
+}
+
+func BenchmarkInfo_CalculateMime(b *testing.B) {
+	info, _ := mediaprobe.New(benchmarkValidVideo)
+	for i := 0; i < b.N; i++ {
+		info.CalculateMime()
 	}
 }
 

@@ -17,8 +17,8 @@ import (
 )
 
 // ParseImage used for retrieve image data
-func (probe *Info) ParseImage() error {
-	file, err := os.Open(probe.filename)
+func (info *Info) ParseImage() error {
+	file, err := os.Open(info.filename)
 	if err != nil {
 		return err
 	}
@@ -38,21 +38,19 @@ func (probe *Info) ParseImage() error {
 		return err
 	}
 
+	info.Width = img.Width
+	info.Height = img.Height
+
 	if orientationTag, err := x.Get(exif.Orientation); err == nil {
 		switch orientationTag.String() {
 		case "5", "6", "7", "8":
-			probe.Width = img.Height
-			probe.Height = img.Width
+			info.Width = img.Height
+			info.Height = img.Width
 		default:
-			probe.Width = img.Width
-			probe.Height = img.Height
+			info.Width = img.Width
+			info.Height = img.Height
 		}
-
-		return nil
 	}
-
-	probe.Width = img.Width
-	probe.Height = img.Height
 
 	return nil
 }
