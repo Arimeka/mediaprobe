@@ -1,6 +1,31 @@
 package mediaprobe
 
-import "time"
+import (
+	"os"
+	"time"
+)
+
+// New initialized Info using magic bytes for calculating media type
+func New(filename string) (*Info, error) {
+	file, err := os.Open(filename)
+	if err != nil {
+		return nil, err
+	}
+	defer file.Close()
+
+	fileinfo, err := file.Stat()
+	if err != nil {
+		return nil, err
+	}
+
+	info := &Info{
+		filename: filename,
+		Name:     fileinfo.Name(),
+		Size:     fileinfo.Size(),
+	}
+
+	return info, nil
+}
 
 // Info contains parsed information
 type Info struct {
@@ -18,7 +43,7 @@ type Info struct {
 	Streams      []Stream
 }
 
-// Stream used for contain audio/video stream information
+// Stream contains audio/video stream information
 type Stream struct {
 	ID             int
 	Index          int

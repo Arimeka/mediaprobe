@@ -7,10 +7,18 @@ import (
 )
 
 const (
-	testImageValidImage          = "./example/samples/image.jpeg"
-	testImageWithExifOrientation = "./example/samples/left.jpg"
-	testImageInvalidImage        = "./example/samples/not-an-image.jpeg"
+	testImageValidImage          = "./fixtures/image.jpeg"
+	testImageWithExifOrientation = "./fixtures/left.jpg"
+	testImageInvalidImage        = "./fixtures/not-an-image.jpeg"
 )
+
+func TestInfo_ParseImageNotFound(t *testing.T) {
+	info := &mediaprobe.Info{}
+	err := info.ParseImage()
+	if err == nil {
+		t.Errorf("Expected to return error found but return nil")
+	}
+}
 
 func TestInfo_ParseImage(t *testing.T) {
 	info, _ := mediaprobe.New(testImageInvalidImage)

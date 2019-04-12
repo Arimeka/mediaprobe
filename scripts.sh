@@ -10,6 +10,9 @@ runTests() {
   if ! gocritic check -enable='#diagnostic,#style,#performance' -disable='docStub' .; then
     exit 1
   fi
+  if ! gocyclo -over 15 .; then
+    exit 1
+  fi
   if ! go test -cover -race -coverprofile=cover.out -outputdir=coverage .; then
     exit 1
   fi
