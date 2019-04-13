@@ -33,22 +33,16 @@ func (info *Info) ParseImage() error {
 		return err
 	}
 
-	x, err := exif.Decode(file)
-	if err != nil {
-		return err
-	}
-
 	info.Width = img.Width
 	info.Height = img.Height
 
-	if orientationTag, err := x.Get(exif.Orientation); err == nil {
-		switch orientationTag.String() {
-		case "5", "6", "7", "8":
-			info.Width = img.Height
-			info.Height = img.Width
-		default:
-			info.Width = img.Width
-			info.Height = img.Height
+	if x, err := exif.Decode(file); err == nil {
+		if orientationTag, err := x.Get(exif.Orientation); err == nil {
+			switch orientationTag.String() {
+			case "5", "6", "7", "8":
+				info.Width = img.Height
+				info.Height = img.Width
+			}
 		}
 	}
 
