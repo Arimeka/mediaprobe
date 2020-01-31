@@ -26,6 +26,10 @@ func (info *Info) FFProbe() error {
 		}
 
 		codecCtx := stream.CodecCtx()
+		if codecCtx == nil {
+			// do nothing if can't extract codec from stream
+			continue
+		}
 		codec := codecCtx.Codec()
 
 		streamInfo := Stream{

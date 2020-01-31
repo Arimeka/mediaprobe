@@ -8,6 +8,7 @@ import (
 
 var bitrateFiles = map[string]int64{
 	"./fixtures/video.mp4":       551193,
+	"./fixtures/with-meta.mov":   481140,
 	"./fixtures/audio.mp3":       128000,
 	"./fixtures/not-a-video.mp4": 0,
 	"./fixtures/corrupted.mp4":   0,
