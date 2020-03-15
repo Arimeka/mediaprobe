@@ -1,12 +1,24 @@
 package mediaprobe
 
 import (
+	"fmt"
+	"net/http"
+	"net/url"
 	"os"
 	"time"
 )
 
-// New initialized Info using magic bytes for calculating media type
+// New initialized Info and calculate file size
 func New(filename string) (*Info, error) {
+	uri, err := url.Parse(filename)
+	if err != nil || !uri.IsAbs() {
+		return openFile(filename)
+	}
+
+	return openURL(filename, uri)
+}
+
+func openFile(filename string) (*Info, error) {
 	file, err := os.Open(filename)
 	if err != nil {
 		return nil, err
@@ -27,9 +39,48 @@ func New(filename string) (*Info, error) {
 	return info, nil
 }
 
+func openURL(filename string, uri *url.URL) (*Info, error) {
+	headReq := &http.Request{
+		Method: http.MethodHead,
+		URL:    uri,
+	}
+	head, err := httpClient.Do(headReq)
+	if err != nil {
+		return nil, err
+	}
+	if head.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("unexpected status code %d", head.StatusCode)
+	}
+	head.Body.Close()
+
+	body, err := getRemoteFile(uri)
+	if err != nil {
+		return nil, err
+	}
+	defer body.Close()
+
+	info := &Info{
+		data:     make([]byte, 1024),
+		filename: filename,
+		uri:      uri,
+
+		Name: filename,
+		Size: head.ContentLength,
+	}
+
+	_, err = body.Read(info.data)
+	if err != nil {
+		return nil, err
+	}
+
+	return info, nil
+}
+
 // Info contains parsed information
 type Info struct {
 	filename string
+	uri      *url.URL
+	data     []byte
 
 	Name         string
 	MediaType    string
