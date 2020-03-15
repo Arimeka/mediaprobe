@@ -8,7 +8,6 @@ import (
 )
 
 const (
-	testImageValidRemoteImage     = "http://localhost:9090/image.jpeg"
 	testImageValidImage           = "./fixtures/image.jpeg"
 	testImageWithExifOrientation  = "./fixtures/left.jpg"
 	testImageInvalidImage         = "./fixtures/not-an-image.jpeg"
@@ -43,7 +42,7 @@ func parseImageNotFoundRemote(t *testing.T) {
 	srv := ServeHttp(handler)
 	defer srv.Stop()
 
-	info, err := mediaprobe.New(testImageValidRemoteImage)
+	info, err := mediaprobe.New(srv.Endpoint())
 	if err != nil {
 		t.Fatalf("Unexpected error %v", err)
 	}
@@ -61,7 +60,7 @@ func parseImageConnectionErrorRemote(t *testing.T) {
 	}
 	srv := ServeHttp(handler)
 
-	info, err := mediaprobe.New(testImageValidRemoteImage)
+	info, err := mediaprobe.New(srv.Endpoint())
 	if err != nil {
 		t.Fatalf("Unexpected error %v", err)
 	}
@@ -96,7 +95,7 @@ func parseImageValidRemote(t *testing.T) {
 	srv := ServeHttp(handler)
 	defer srv.Stop()
 
-	info, err := mediaprobe.New(testImageValidRemoteImage)
+	info, err := mediaprobe.New(srv.Endpoint())
 	if err != nil {
 		t.Fatalf("Unexpected error %v", err)
 	}

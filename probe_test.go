@@ -7,7 +7,7 @@ import (
 )
 
 const (
-	testProbeValidRemoteImage = "http://localhost:9090/image.jpeg"
+	testProbeValidRemoteImage = "http://localhost:9097/image.jpeg"
 	testProbeValidImage       = "./fixtures/image.jpeg"
 	testProbeInvalidImage     = "./fixtures/not-an-image.jpeg"
 	testProbeValidVideo       = "./fixtures/video.mp4"
@@ -52,9 +52,9 @@ func parseValidRemoteImage(t *testing.T) {
 	srv := ServeHttp(handler)
 	defer srv.Stop()
 
-	info, err := mediaprobe.Parse(testProbeValidRemoteImage)
+	info, err := mediaprobe.Parse(srv.Endpoint())
 	if err != nil {
-		t.Errorf("Filename: %s. Unexpected error %v", testProbeValidRemoteImage, err)
+		t.Errorf("Unexpected error %v", err)
 	}
 	width := info.Width
 	if width != 290 {

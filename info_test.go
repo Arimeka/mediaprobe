@@ -29,7 +29,7 @@ func newNotFoundRemote(t *testing.T) {
 	srv := ServeHttp(handler)
 	defer srv.Stop()
 
-	_, err := mediaprobe.New("http://localhost:9090/not-exist")
+	_, err := mediaprobe.New(srv.Endpoint())
 	if err == nil {
 		t.Errorf("Expected to return error found but return nil")
 	}
@@ -59,7 +59,7 @@ func newRemoteFile(t *testing.T) {
 	srv := ServeHttp(handler)
 	defer srv.Stop()
 
-	info, err := mediaprobe.New("http://localhost:9090/video.mp4")
+	info, err := mediaprobe.New(srv.Endpoint())
 	if err != nil {
 		t.Fatalf("Unexpected error %v", err)
 	}

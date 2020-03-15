@@ -1,26 +1,28 @@
 package mediaprobe_test
 
 import (
-	"context"
 	"net/http"
+	"net/http/httptest"
+	"time"
 )
 
 type Server struct {
-	srv *http.Server
+	srv *httptest.Server
 }
 
 func (s *Server) Stop() {
-	_ = s.srv.Shutdown(context.Background())
+	s.srv.Close()
+}
+
+func (s *Server) Endpoint() string {
+	return s.srv.URL
 }
 
 func ServeHttp(handler *Handler) *Server {
-	srv := &http.Server{
-		Addr:    ":9090",
-		Handler: handler,
-	}
-	go func(s *http.Server) {
-		_ = s.ListenAndServe()
-	}(srv)
+	httptest.NewServer(handler)
+
+	srv := httptest.NewServer(handler)
+	time.Sleep(100 * time.Millisecond)
 
 	return &Server{srv: srv}
 }

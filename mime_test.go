@@ -41,7 +41,7 @@ func calculateMimeRemote(t *testing.T) {
 	srv := ServeHttp(handler)
 	defer srv.Stop()
 
-	info, err := mediaprobe.New("http://localhost:9090/not-an-image.jpeg")
+	info, err := mediaprobe.New(srv.Endpoint())
 	if err != nil {
 		t.Fatalf("Unexpected error %v", err)
 	}
