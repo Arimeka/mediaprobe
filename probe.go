@@ -9,6 +9,8 @@ import (
 // Parse file media data
 // It determines the file type by magic bytes,
 // and parses the media data of the video or image.
+//
+// Accepted filename as local path or absolute url.
 func Parse(filename string) (Info, error) {
 	info, err := New(filename)
 	if err != nil {

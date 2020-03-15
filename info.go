@@ -8,7 +8,9 @@ import (
 	"time"
 )
 
-// New initialized Info and calculate file size
+// New initialized Info and calculate file size.
+//
+// Accepted filename as local path or absolute url.
 func New(filename string) (*Info, error) {
 	uri, err := url.Parse(filename)
 	if err != nil || !uri.IsAbs() {
