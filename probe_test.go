@@ -7,22 +7,34 @@ import (
 )
 
 const (
-	testProbeValidImage    = "./fixtures/image.jpeg"
-	testProbeInvalidImage  = "./fixtures/not-an-image.jpeg"
-	testProbeValidVideo    = "./fixtures/video.mp4"
-	testProbeInvalidVideo  = "./fixtures/not-a-video.mp4"
-	testProbeValidAudio    = "./fixtures/audio.mp3"
-	testProbeCorruptedFile = "./fixtures/corrupted.mp4"
+	testProbeValidRemoteImage = "http://localhost:9097/image.jpeg"
+	testProbeValidImage       = "./fixtures/image.jpeg"
+	testProbeInvalidImage     = "./fixtures/not-an-image.jpeg"
+	testProbeValidVideo       = "./fixtures/video.mp4"
+	testProbeInvalidVideo     = "./fixtures/not-a-video.mp4"
+	testProbeValidAudio       = "./fixtures/audio.mp3"
+	testProbeCorruptedFile    = "./fixtures/corrupted.mp4"
 )
 
-func TestParseNotFound(t *testing.T) {
+func TestParse(t *testing.T) {
+	t.Run("not_found", parseNotFound)
+	t.Run("valid_remote_image", parseValidRemoteImage)
+	t.Run("valid_image", parseValidImage)
+	t.Run("invalid_image", parseInvalidImage)
+	t.Run("valid_video", parseValidVideo)
+	t.Run("invalid_video", parseInvalidVideo)
+	t.Run("valid_audio", parseValidAudio)
+	t.Run("corrupted_file", parseCorruptedFile)
+}
+
+func parseNotFound(t *testing.T) {
 	_, err := mediaprobe.Parse("")
 	if err == nil {
 		t.Errorf("Expected to return error found but return nil")
 	}
 }
 
-func TestParseValidImage(t *testing.T) {
+func parseValidImage(t *testing.T) {
 	info, err := mediaprobe.Parse(testProbeValidImage)
 	if err != nil {
 		t.Errorf("Filename: %s. Unexpected error %v", testProbeValidImage, err)
@@ -33,7 +45,24 @@ func TestParseValidImage(t *testing.T) {
 	}
 }
 
-func TestParseInvalidImage(t *testing.T) {
+func parseValidRemoteImage(t *testing.T) {
+	handler := &Handler{
+		Filename: "./fixtures/image.jpeg",
+	}
+	srv := ServeHttp(handler)
+	defer srv.Stop()
+
+	info, err := mediaprobe.Parse(srv.Endpoint())
+	if err != nil {
+		t.Errorf("Unexpected error %v", err)
+	}
+	width := info.Width
+	if width != 290 {
+		t.Errorf("Filename: %s. Not expected width. Expected %d; got %d", testProbeValidRemoteImage, 290, width)
+	}
+}
+
+func parseInvalidImage(t *testing.T) {
 	info, err := mediaprobe.Parse(testProbeInvalidImage)
 	if err != nil {
 		t.Errorf("Filename: %s. Unexpected error %v", testProbeInvalidImage, err)
@@ -44,7 +73,7 @@ func TestParseInvalidImage(t *testing.T) {
 	}
 }
 
-func TestParseValidVideo(t *testing.T) {
+func parseValidVideo(t *testing.T) {
 	info, err := mediaprobe.Parse(testProbeValidVideo)
 	if err != nil {
 		t.Errorf("Filename: %s. Unexpected error %v", testProbeValidVideo, err)
@@ -55,7 +84,7 @@ func TestParseValidVideo(t *testing.T) {
 	}
 }
 
-func TestParseInvalidVideo(t *testing.T) {
+func parseInvalidVideo(t *testing.T) {
 	info, err := mediaprobe.Parse(testProbeInvalidVideo)
 	if err != nil {
 		t.Errorf("Filename: %s. Unexpected error %v", testProbeInvalidVideo, err)
@@ -66,7 +95,7 @@ func TestParseInvalidVideo(t *testing.T) {
 	}
 }
 
-func TestParseValidAudio(t *testing.T) {
+func parseValidAudio(t *testing.T) {
 	info, err := mediaprobe.Parse(testProbeValidAudio)
 	if err != nil {
 		t.Errorf("Filename: %s. Unexpected error %v", testProbeValidAudio, err)
@@ -77,7 +106,7 @@ func TestParseValidAudio(t *testing.T) {
 	}
 }
 
-func TestParseCorruptedFile(t *testing.T) {
+func parseCorruptedFile(t *testing.T) {
 	info, err := mediaprobe.Parse(testProbeCorruptedFile)
 	if err != nil {
 		t.Errorf("Filename: %s. Unexpected error %v", testProbeCorruptedFile, err)

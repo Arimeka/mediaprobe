@@ -13,20 +13,20 @@ const (
 
 func BenchmarkParse(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		mediaprobe.Parse(benchmarkValidVideo)
+		_, _ = mediaprobe.Parse(benchmarkValidVideo)
 	}
 }
 
 func BenchmarkNew(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		mediaprobe.New(benchmarkValidVideo)
+		_, _ = mediaprobe.New(benchmarkValidVideo)
 	}
 }
 
 func BenchmarkInfo_CalculateMime(b *testing.B) {
 	info, _ := mediaprobe.New(benchmarkValidVideo)
 	for i := 0; i < b.N; i++ {
-		info.CalculateMime()
+		_ = info.CalculateMime()
 	}
 }
 
@@ -34,7 +34,7 @@ func BenchmarkInfo_FFProbe(b *testing.B) {
 	info, _ := mediaprobe.New(benchmarkValidVideo)
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		info.FFProbe()
+		_ = info.FFProbe()
 	}
 }
 
@@ -42,6 +42,6 @@ func BenchmarkInfo_ParseImage(b *testing.B) {
 	info, _ := mediaprobe.New(benchmarkValidImage)
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		info.FFProbe()
+		_ = info.FFProbe()
 	}
 }

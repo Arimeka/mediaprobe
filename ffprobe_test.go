@@ -15,10 +15,14 @@ var bitrateFiles = map[string]int64{
 }
 
 func TestInfo_FFProbe(t *testing.T) {
-	for filename, expectedBitrate := range bitrateFiles {
-		info, _ := mediaprobe.New(filename)
 
-		err := info.FFProbe()
+	for filename, expectedBitrate := range bitrateFiles {
+		info, err := mediaprobe.New(filename)
+		if err != nil {
+			t.Fatalf("Filename: %s. Unexpected error %v", filename, err)
+		}
+
+		err = info.FFProbe()
 		if err != nil {
 			if filename != "./fixtures/corrupted.mp4" {
 				t.Errorf("Filename: %s. Unexpected error %v", filename, err)
@@ -33,5 +37,30 @@ func TestInfo_FFProbe(t *testing.T) {
 		if bitrate != expectedBitrate {
 			t.Errorf("Filename: %s. Not expected video bitrate. Expected %d; got %d", filename, expectedBitrate, bitrate)
 		}
+	}
+
+	t.Run("remote_file", ffprobeRemoteFile)
+}
+
+func ffprobeRemoteFile(t *testing.T) {
+	handler := &Handler{
+		Filename: "./fixtures/video.mp4",
+	}
+	srv := ServeHttp(handler)
+	defer srv.Stop()
+
+	info, err := mediaprobe.New(srv.Endpoint())
+	if err != nil {
+		t.Fatalf("Unexpected error %v", err)
+	}
+
+	err = info.FFProbe()
+	if err != nil {
+		t.Errorf("Unexpected error %v", err)
+	}
+
+	bitrate := info.BitRate
+	if bitrate != 551193 {
+		t.Errorf("Not expected video bitrate. Expected %d; got %d", 551193, bitrate)
 	}
 }

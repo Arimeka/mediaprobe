@@ -8,13 +8,18 @@ import (
 
 // CalculateMime calculates mime type by magic numbers
 // Function uses libmagic bindings using github.com/rakyll/magicmime package.
-func (info *Info) CalculateMime() error {
+func (info *Info) CalculateMime() (err error) {
 	if err := magicmime.Open(magicmime.MAGIC_MIME_TYPE | magicmime.MAGIC_SYMLINK | magicmime.MAGIC_ERROR); err != nil {
 		return err
 	}
 	defer magicmime.Close()
 
-	media, err := magicmime.TypeByFile(info.filename)
+	var media string
+	if info.data != nil {
+		media, err = magicmime.TypeByBuffer(info.data)
+	} else {
+		media, err = magicmime.TypeByFile(info.filename)
+	}
 	if err != nil {
 		return err
 	}
