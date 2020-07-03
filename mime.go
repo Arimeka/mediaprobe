@@ -6,14 +6,15 @@ import (
 	"github.com/rakyll/magicmime"
 )
 
+func init() {
+	if err := magicmime.Open(magicmime.MAGIC_MIME_TYPE | magicmime.MAGIC_SYMLINK | magicmime.MAGIC_ERROR); err != nil {
+		panic(err)
+	}
+}
+
 // CalculateMime calculates mime type by magic numbers
 // Function uses libmagic bindings using github.com/rakyll/magicmime package.
 func (info *Info) CalculateMime() (err error) {
-	if err := magicmime.Open(magicmime.MAGIC_MIME_TYPE | magicmime.MAGIC_SYMLINK | magicmime.MAGIC_ERROR); err != nil {
-		return err
-	}
-	defer magicmime.Close()
-
 	var media string
 	if info.data != nil {
 		media, err = magicmime.TypeByBuffer(info.data)
