@@ -116,4 +116,6 @@ type Stream struct {
 	AvgFrameRate   float64
 	BFrames        int
 	BitsPerSample  int
+	PixFmt         int
+	PixFmtName     string
 }

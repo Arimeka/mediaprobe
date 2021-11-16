@@ -35,11 +35,12 @@ See [godoc](https://godoc.org/github.com/Arimeka/mediaprobe) examples.
 ## Benchmark
 
 ```
-BenchmarkParse-4                             200           7877832 ns/op            2071 B/op         59 allocs/op
-BenchmarkNew-4                             10000            123999 ns/op             488 B/op          5 allocs/op
-BenchmarkInfo_CalculateMime-4                500           2303269 ns/op              75 B/op          4 allocs/op
-BenchmarkInfo_FFProbe-4                      300           5137768 ns/op            2392 B/op         48 allocs/op
-BenchmarkInfo_ParseImage-4                  2000            578220 ns/op            1320 B/op         23 allocs/op
+cpu: Intel(R) Core(TM) i5-4258U CPU @ 2.40GHz
+BenchmarkParse-4                	     144	   7199375 ns/op	    2107 B/op	      45 allocs/op
+BenchmarkNew-4                  	   62948	     18073 ns/op	     656 B/op	       6 allocs/op
+BenchmarkInfo_CalculateMime-4   	    1254	    954855 ns/op	      72 B/op	       4 allocs/op
+BenchmarkInfo_FFProbe-4         	     190	   5747085 ns/op	    1913 B/op	      33 allocs/op
+BenchmarkInfo_ParseImage-4      	    2074	    583830 ns/op	    1216 B/op	      19 allocs/op
 ```
 
 ## Caveats
