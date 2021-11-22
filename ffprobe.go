@@ -1,5 +1,15 @@
 package mediaprobe
 
+/*
+
+#cgo pkg-config: libavutil
+
+#include <stdlib.h>
+#include "libavutil/pixdesc.h"
+
+*/
+import "C"
+
 import (
 	"time"
 
@@ -54,6 +64,8 @@ func (info *Info) FFProbe() error {
 			streamInfo.AspectRation = codecCtx.GetAspectRation().AVR().Av2qd()
 			streamInfo.BFrames = codecCtx.GetBFrames()
 			streamInfo.BitsPerSample = codecCtx.GetBitsPerSample()
+			streamInfo.PixFmt = int(codecCtx.PixFmt())
+			streamInfo.PixFmtName = info.pixFmtName(codecCtx.PixFmt())
 		}
 
 		codecCtx.Free()
@@ -63,4 +75,8 @@ func (info *Info) FFProbe() error {
 	}
 
 	return nil
+}
+
+func (info *Info) pixFmtName(pixFmt int32) string {
+	return C.GoString(C.av_get_pix_fmt_name(pixFmt))
 }

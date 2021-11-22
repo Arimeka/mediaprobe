@@ -40,6 +40,7 @@ func TestInfo_FFProbe(t *testing.T) {
 	}
 
 	t.Run("remote_file", ffprobeRemoteFile)
+	t.Run("pixel format", ffprobePixelFormat)
 }
 
 func ffprobeRemoteFile(t *testing.T) {
@@ -62,5 +63,21 @@ func ffprobeRemoteFile(t *testing.T) {
 	bitrate := info.BitRate
 	if bitrate != 551193 {
 		t.Errorf("Not expected video bitrate. Expected %d; got %d", 551193, bitrate)
+	}
+}
+
+func ffprobePixelFormat(t *testing.T) {
+	info, err := mediaprobe.New("./fixtures/video.mp4")
+	if err != nil {
+		t.Fatalf("Unexpected error %v", err)
+	}
+
+	err = info.FFProbe()
+	if err != nil {
+		t.Errorf("Unexpected error %v", err)
+	}
+
+	if info.Streams[0].PixFmtName != "yuv420p" {
+		t.Errorf("Not expected pixel format. Expected %s; got %s", "yuv420p", info.Streams[0].PixFmtName)
 	}
 }
