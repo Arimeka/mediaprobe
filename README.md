@@ -19,7 +19,7 @@ It uses [github.com/rakyll/magicmime](https://github.com/rakyll/magicmime) for d
     ```bash
     sudo apt-get install libmagic-dev
     ```
-1. You need ffmpeg libraries version 4.x. You may [compile it from sources](https://trac.ffmpeg.org/wiki/CompilationGuide/Ubuntu),
+1. You need ffmpeg libraries version 4.x or higher. You may [compile it from sources](https://trac.ffmpeg.org/wiki/CompilationGuide/Ubuntu),
 or use PPA. For example, [ppa:jonathonf/ffmpeg-4](https://launchpad.net/~jonathonf/+archive/ubuntu/ffmpeg-4)
     ```bash
     sudo add-apt-repository ppa:jonathonf/ffmpeg-4
